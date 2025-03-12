@@ -1,6 +1,13 @@
 const gulp = require ('gulp')
 const sass = require('gulp-sass')(require('sass'))
 const imageMin = require('gulp-imagemin')
+const uglify = require('gulp-uglify')
+
+function scripts() {
+    return gulp.src('./src/scripts/*.js')
+        .pipe(uglify())
+        .pipe(gulp.dest('./dist/js'))
+}
 
 function compilaSass() {
     return gulp.src('./src/styles/*.scss')
@@ -15,7 +22,8 @@ function minificaImages() {
 }
 
 exports.default = function() {
-    gulp.watch('./src/styles/*.scss', { ignoreInitial: false }, compilaSass)
+    gulp.watch('./src/styles/*.scss', { ignoreInitial: false },gulp.parallel(compilaSass))
+    gulp.watch('./src/scripts/*.js', { ignoreInitial: false }, gulp.parallel(scripts))
 }
 
-exports.minificaImages = gulp.parallel(compilaSass, minificaImages)
+exports.minificaImages = gulp.parallel(compilaSass, minificaImages, scripts)
