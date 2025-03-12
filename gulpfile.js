@@ -26,4 +26,4 @@ exports.default = function() {
     gulp.watch('./src/scripts/*.js', { ignoreInitial: false }, gulp.parallel(scripts))
 }
 
-exports.minificaImages = gulp.parallel(compilaSass, minificaImages, scripts)
+exports.build = gulp.parallel(compilaSass, minificaImages, scripts)
